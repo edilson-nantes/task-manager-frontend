@@ -1,51 +1,19 @@
-import { useState } from "react"
+import { useEffect } from "react"
 import { AddTask } from "../components/AddTask"
 import { TasksList } from "../components/TasksList"
-
-interface Task {
-    id: number;
-    title: string;
-    description: string;
-    status: string;
-}
+import { useAppDispatch } from "../redux/hooks";
+import { loadTasks } from "../redux/slices/taskSlice";
+import { useAuth } from "../context/AuthContext";
 
 export function Tasks() {
-    const [tasks, setTasks] = useState<Task[]>([
-        {
-            id: 1,
-            title: "Estudar",
-            description: "Estudar programação",
-            status: "em progresso"
-        },
-        {
-            id: 2,
-            title: "Limpar a casa",
-            description: "Limpar a casa",
-            status: "pendente"
-        },
-        {
-            id: 3,
-            title: "Tirar o lixo",
-            description: "Colocar o lixo na coleta",
-            status: "concluída"
-        }
-    ])
+    const dispatch = useAppDispatch();
+    const { token } = useAuth();
 
-    function onDeleteTaskClick(id: number) {
-        const newTasks = tasks.filter(task => task.id !== id);
-        setTasks(newTasks);
-    }
-
-    function onAddTaskSubmit(title: string, description: string) {
-        const newTask = {
-            id: tasks.length + 1,
-            title,
-            description,
-            status: "pendente"
-        };
-
-        setTasks([...tasks, newTask]);
-    }
+    useEffect(() => {
+      if(token) {
+        dispatch(loadTasks(token));
+      }
+    }, [dispatch]);
   
 
   return (
@@ -55,8 +23,9 @@ export function Tasks() {
           Gerenciador de Tarefas
         </h1>
 
-        <AddTask onAddTaskSubmit={onAddTaskSubmit} />
-        <TasksList tasks={tasks} onDeleteTaskClick={onDeleteTaskClick} />
+        <AddTask />
+
+        <TasksList />
       </div>
     </div>
   )

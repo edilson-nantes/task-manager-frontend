@@ -1,5 +1,6 @@
 import { ChevronRightIcon, TrashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
 
 interface Task {
     id: number;
@@ -8,19 +9,19 @@ interface Task {
     status: string;
 }
 
-interface TasksListProps {
-    tasks: Task[];
-    onDeleteTaskClick: (id: number) => void;
-}
-
-export function TasksList({ tasks, onDeleteTaskClick }: TasksListProps) {
+export function TasksList() {
     const navigate = useNavigate();
+    const tasks = useAppSelector((state) => state.tasks.tasks);
 
     function onSeeDatailsClick(task: Task) {
         const query = new URLSearchParams();
         query.set("title", task.title);
         query.set("description", task.description);
         navigate(`/task-page?${query.toString()}`);
+    }
+
+    function onDeleteTaskClick(id: number) {
+        console.log(id);
     }
 
     return (

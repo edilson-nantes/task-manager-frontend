@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-interface AddTaskProps {
-    onAddTaskSubmit: (title: string, description: string) => void;
-}
-
-export function AddTask({ onAddTaskSubmit }: AddTaskProps) {
+export function AddTask() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+
+    function onAddTaskSubmit(title: string, description: string) {
+        console.log(title, description);
+    }
 
     return (
         <div className="space-y-4 p-6 bg-slate-200 rounded-md shadow flex flex-col">
