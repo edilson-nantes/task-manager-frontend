@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function LoginForm() {
     const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     async function onLoginClick(email: string, password: string) {
         await login(email, password);
+        navigate("/tasks");
     }
 
     return (
