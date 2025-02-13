@@ -3,6 +3,7 @@ import { Tasks } from "./pages/Tasks";
 import { TaskPage } from "./pages/TaskPage";
 import { LoginPage } from "./pages/LoginPage";
 import { PrivateRoute } from "./components/PrivateRoute";
+import { RegisterPage } from "./pages/RegisterPage";
 
 export function Router() {
     
@@ -10,6 +11,7 @@ export function Router() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
                 <Route path="/tasks" element={
                     <PrivateRoute>
                         <Tasks />

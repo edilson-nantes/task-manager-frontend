@@ -1,9 +1,8 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { login as loginService } from "../services/authService";
 
 interface AuthContextProps {
     token: string | null;
-    login: (email: string, password: string) => void;
+    login: (token: string) => void;
     logout: () => void;
 }
 
@@ -12,14 +11,9 @@ export const AuthContext = createContext<AuthContextProps | undefined>(undefined
 export function AuthProvider ({ children }: {children: ReactNode}) {
     const [token, setToken] = useState<string | null>(null);
 
-    async function login(email: string, password: string) {
-        try {
-            const token = await loginService(email, password);
-            setToken(token);
-            localStorage.setItem("token", token);
-          } catch (error) {
-            console.error(error);
-          }
+    async function login(token: string) {
+        setToken(token);
+        localStorage.setItem("token", token);
     };
 
     function logout() {

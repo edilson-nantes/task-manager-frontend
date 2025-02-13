@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { loginService } from "../services/userService";
 
 export function LoginForm() {
     const { login } = useAuth();
@@ -9,7 +10,9 @@ export function LoginForm() {
     const navigate = useNavigate();
 
     async function onLoginClick(email: string, password: string) {
-        await login(email, password);
+        const token = await loginService(email, password);
+
+        await login(token);
         navigate("/tasks");
     }
 
