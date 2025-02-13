@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchTasks } from "../../services/tasksService";
+import { createTask, fetchTasks } from "../../services/tasksService";
 
 
 interface Task {
-    id: number;
+    id?: number;
     title: string;
     description: string;
     status: string;
@@ -26,6 +26,11 @@ export const loadTasks = createAsyncThunk('tasks/fetchTasks', async (token: stri
     return response;
 });
 
+export const addTask = createAsyncThunk('tasks/addTask', async ({ token, task }: { token: string, task: Task }) => {
+    const response = await createTask(token, task);
+    return response.data;
+});
+
 const taskSlice = createSlice({
     name: "tasks",
     initialState,
@@ -42,6 +47,9 @@ const taskSlice = createSlice({
             .addCase(loadTasks.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Failed to fetch tasks';
+            })
+            .addCase(addTask.fulfilled, (state, action) => {
+                state.tasks.push(action.payload);
             });
     }
 });

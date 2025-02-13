@@ -1,6 +1,13 @@
 
 import axios from "axios";
 
+interface Task {
+    id?: number;
+    title: string;
+    description: string;
+    status: string;
+}
+
 const api = axios.create({
   baseURL: "http://localhost:8080/api",
 });
@@ -20,13 +27,15 @@ export async function fetchTasks(token: string) {
   }
 }
 
-export async function createTask(token: string, title: string, description: string, status: string) {
+export async function createTask(token: string, task: Task) {
   try {
+    console.log("token no service", token);
+    
     const response = await api.post("/tasks",
       {
-        title,
-        description,
-        status
+        title: task.title,
+        description: task.description,
+        status: task.status
       },
       {
         headers: {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 
 interface Task {
-    id: number;
+    id?: number;
     title: string;
     description: string;
     status: string;
@@ -27,28 +27,30 @@ export function TasksList() {
     return (
         <ul className="space-y-4 p-6 bg-slate-200 rounded-md shadow">
             {tasks.map((task) => (
-                <li key={task.id} className="flex gap-2">
-                    <button
-                        className={`w-full text-left bg-slate-400 text-white p-2 rounded-md
-                        ${task.status === "concluída" ? "line-through" : ""
-                    }`}>
-                        {task.title}
-                        <span className="text-sm text-slate-100">({task.status})</span>
-                    </button>
+                task && task.id !== undefined && task.title && task.description && task.status && (
+                    <li key={task.id} className="flex gap-2">
+                        <button
+                            className={`w-full text-left bg-slate-400 text-white p-2 rounded-md
+                            ${task.status === "concluída" ? "line-through" : ""
+                        }`}>
+                            {task.title}
+                            <span className="text-sm text-slate-100">({task.status})</span>
+                        </button>
 
-                    <button
-                        onClick={() => onSeeDatailsClick(task)}
-                        className="bg-slate-400 text-white p-2 rounded-md">
-                        <ChevronRightIcon />
-                    </button>
+                        <button
+                            onClick={() => onSeeDatailsClick(task)}
+                            className="bg-slate-400 text-white p-2 rounded-md">
+                            <ChevronRightIcon />
+                        </button>
 
-                    <button
-                        className="bg-slate-400 text-white p-2 rounded-md"
-                        onClick={() => onDeleteTaskClick(task.id)}>
-                        <TrashIcon />
-                    </button>
-                </li>
-            ))}
+                        <button
+                            className="bg-slate-400 text-white p-2 rounded-md"
+                            onClick={() => { task.id ? onDeleteTaskClick(task.id): alert("ID da tarefa não encontrado")}}>
+                            <TrashIcon />
+                        </button>
+                    </li>
+                )))
+            }
         </ul>
     )
 }

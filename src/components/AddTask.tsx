@@ -1,11 +1,33 @@
 import { useState } from "react";
+import { useAppDispatch } from "../redux/hooks";
+import { addTask } from '../redux/slices/taskSlice';
+import { useAuth } from "../context/AuthContext";
 
 export function AddTask() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [status, setStatus] = useState("");
+    const dispatch = useAppDispatch();
+    const { token } = useAuth();
 
-    function onAddTaskSubmit(title: string, description: string) {
-        console.log(title, description);
+    function onAddTaskSubmit(title: string, description: string, status: string) {
+        if (!title.trim() || !description.trim() || !status.trim()) {
+            return alert("Preencha todos os campos");
+        }
+
+        const newTask = {
+            title,
+            description,
+            status
+        };
+
+        if (token) {
+            dispatch(addTask({ token, task: newTask }));
+        }
+        setTitle("")
+        setDescription("")
+        setStatus("")
+        window.location.reload();
     }
 
     return (
@@ -25,15 +47,20 @@ export function AddTask() {
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
             />
+
+            <select
+                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md bg-slate-50"
+                value={status}
+                onChange={(event) => setStatus(event.target.value)}>
+                <option value="">Status</option>
+                <option value="pendente">Pendente</option>
+                <option value="em progresso">Em progresso</option>
+                <option value="concluida">Concluida</option>
+            </select>
             
             <button 
                 onClick={() => {
-                    if (!title.trim() || !description.trim()) {
-                        return alert("Preencha todos os campos");
-                    }
-                    onAddTaskSubmit(title, description)
-                    setTitle("")
-                    setDescription("")
+                    onAddTaskSubmit(title, description, status);
                 }}
                 className="bg-slate-500 text-white p-2 px-4 py-2 rounded-md">
                 Adicionar
