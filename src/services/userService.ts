@@ -11,7 +11,7 @@ export async function loginService(email: string, password: string) {
       email,
       password,
     });
-    return response.data.accessToken;
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ChevronLeftIcon, CircleUserRound, House } from 'lucide-react';
+import { CircleUserRound, House } from 'lucide-react';
 
 interface HeaderProps {
     pageName: string;
@@ -9,8 +9,8 @@ interface HeaderProps {
 export function Header(HeaderProps: HeaderProps) {
   const navigate = useNavigate();
   const { pageName } = HeaderProps;
-  const { token, logout } = useAuth();
-  const userName = "Edilson Nantes";
+  const { user, logout } = useAuth();
+  const userName = user;
 
   return (
     <div className=" absolute top-0 left-0 flex-row w-full bg-slate-700 p-4 flex items-center justify-center">
@@ -34,7 +34,7 @@ export function Header(HeaderProps: HeaderProps) {
                 <CircleUserRound className="text-white userIcon" />
                 <div className="flex flex-col">
                     <p className="text-white text-lg header">{userName}</p>
-                    <p><a className="text-white text-sm header" href="#" onClick={logout}>Sair</a></p>
+                    <p><a className="text-white text-sm header" onClick={logout}>Sair</a></p>
                 </div>
             </div>
         </div>

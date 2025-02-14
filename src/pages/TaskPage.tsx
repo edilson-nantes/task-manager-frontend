@@ -1,5 +1,3 @@
-import { ChevronLeftIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { TaskDetails } from "../components/TaskDetails";
 import { EditTask } from "../components/EditTask";
@@ -7,7 +5,6 @@ import { Header } from "../components/Header";
 
 
 export function TaskPage() {
-    const navigate = useNavigate();
     const pageName = "Detalhes da tarefa";
     
     

@@ -10,9 +10,9 @@ export function LoginForm() {
     const navigate = useNavigate();
 
     async function onLoginClick(email: string, password: string) {
-        const token = await loginService(email, password);
+        const {accessToken, user} = await loginService(email, password);
 
-        await login(token);
+        await login(accessToken, user);
         navigate("/tasks");
     }
 

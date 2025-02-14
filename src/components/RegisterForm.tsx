@@ -22,14 +22,11 @@ export function RegisterForm() {
 
         try{
             const token = await registerService(name, email, password);
-            await login(token);
+            await login(token, name);
             navigate("/tasks");
         } catch (error) {
             console.error(error);
         }
-        
-        // await login(email, password);
-        // navigate("/tasks");
     }
 
     return (
