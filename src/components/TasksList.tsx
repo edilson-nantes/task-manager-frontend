@@ -1,6 +1,8 @@
 import { ChevronRightIcon, TrashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAuth } from "../context/AuthContext";
+import { dropTask } from "../redux/slices/taskSlice";
 
 interface Task {
     id?: number;
@@ -12,6 +14,8 @@ interface Task {
 export function TasksList() {
     const navigate = useNavigate();
     const tasks = useAppSelector((state) => state.tasks.tasks);
+    const dispatch = useAppDispatch();
+    const { token } = useAuth();
 
     function onSeeDatailsClick(task: Task) {
         const query = new URLSearchParams();
@@ -21,7 +25,9 @@ export function TasksList() {
     }
 
     function onDeleteTaskClick(id: number) {
-        console.log(id);
+        if (token) {
+            dispatch(dropTask({ token, id }));
+        }
     }
 
     return (
