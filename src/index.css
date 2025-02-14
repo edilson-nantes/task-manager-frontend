@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@media screen and (max-width: 900px) {
+    p.header{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    h1.text-3xl{
+        font-size: 1.25rem;
+        line-height: calc(1.75rem / 1.25);
+    }
+
+    .userIcon{
+        display: none;
+    }
+}

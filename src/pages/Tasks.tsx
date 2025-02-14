@@ -4,10 +4,12 @@ import { TasksList } from "../components/TasksList"
 import { useAppDispatch } from "../redux/hooks";
 import { loadTasks } from "../redux/slices/taskSlice";
 import { useAuth } from "../context/AuthContext";
+import { Header } from "../components/Header";
 
 export function Tasks() {
     const dispatch = useAppDispatch();
     const { token } = useAuth();
+    const pageName = "Gerenciador de tarefas";
 
     useEffect(() => {
       if(token) {
@@ -18,17 +20,18 @@ export function Tasks() {
 
   return (
     <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
-      <div className="w-[500px] space-y-4">
-        <div className="flex flex-row justify-center relative text-slate-100">
-            <h1 className="text-3xl text-slate-100 font-bold text-center">
-                Gerenciador de tarefas
-            </h1>
+      
+        <Header pageName={pageName}/>
+      
+        <div className="pt-16 w-[500px] space-y-4">
+          
+          
+
+          <AddTask />
+
+          <TasksList />
         </div>
-
-        <AddTask />
-
-        <TasksList />
-      </div>
+      
     </div>
   )
 }
