@@ -6,9 +6,9 @@ import { dropTask } from "../redux/slices/taskSlice";
 
 interface Task {
     id?: number;
-    title: string;
-    description: string;
-    status: string;
+    title?: string;
+    description?: string;
+    status?: string;
 }
 
 export function TasksList() {
@@ -19,8 +19,7 @@ export function TasksList() {
 
     function onSeeDatailsClick(task: Task) {
         const query = new URLSearchParams();
-        query.set("title", task.title);
-        query.set("description", task.description);
+        query.set("id", task.id ? task.id.toString() : "");
         navigate(`/task-page?${query.toString()}`);
     }
 
@@ -37,7 +36,7 @@ export function TasksList() {
                     <li key={task.id} className="flex gap-2">
                         <button
                             className={`w-full text-left bg-slate-400 text-white p-2 rounded-md
-                            ${task.status === "concluída" ? "line-through" : ""
+                            ${task.status === "concluida" ? "line-through" : ""
                         }`}>
                             {task.title}
                             <span className="text-sm text-slate-100">({task.status})</span>

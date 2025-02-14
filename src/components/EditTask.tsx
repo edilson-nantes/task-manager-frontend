@@ -1,33 +1,41 @@
 import { useState } from "react";
-import { useAppDispatch } from "../redux/hooks";
-import { addTask } from '../redux/slices/taskSlice';
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { updateTask } from "../redux/slices/taskSlice";
 
-export function AddTask() {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [status, setStatus] = useState("");
+interface Task {
+    id?: number;
+    title?: string;
+    description?: string;
+    status?: string;
+}
+
+interface EditTaskProps {
+    onEditClick: () => void;
+}
+
+export function EditTask(props: EditTaskProps) {
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
+    const task = useAppSelector((state) => state.tasks.tasks.find((task) => task.id?.toString() === id));
+    
+    const [title, setTitle] = useState(task?.title);
+    const [description, setDescription] = useState(task?.description);
+    const [status, setStatus] = useState(task?.status);
     const dispatch = useAppDispatch();
     const { token } = useAuth();
+    const navigate = useNavigate();
 
-    function onAddTaskSubmit(title: string, description: string, status: string) {
-        if (!title.trim() || !description.trim() || !status.trim()) {
-            return alert("Preencha todos os campos");
-        }
+    function onUpdateTaskSubmit(updatedTask: Task) {
 
-        const newTask = {
-            title,
-            description,
-            status
-        };
+        
 
         if (token) {
-            dispatch(addTask({ token, task: newTask }));
+            dispatch(updateTask({ token, task: updatedTask }));
         }
-        setTitle("")
-        setDescription("")
-        setStatus("")
-        window.location.reload();
+
+        navigate("/tasks");
     }
 
     return (
@@ -60,10 +68,23 @@ export function AddTask() {
             
             <button 
                 onClick={() => {
-                    onAddTaskSubmit(title, description, status);
+                    const updatedTask = {
+                        id: Number(id),
+                        title: title,
+                        description: description,
+                        status: status
+                    };
+                    onUpdateTaskSubmit(updatedTask);
                 }}
                 className="bg-slate-500 text-white p-2 px-4 py-2 rounded-md">
-                Adicionar
+                Salvar
+            </button>
+
+            <button 
+                onClick={() => {
+                    props.onEditClick()}}
+                className="border-slate-300 border outline-slate-400 bg-slate-300 text-slate-500 p-2 px-4 py-2 rounded-md">
+                Cancelar
             </button>
         </div>
     )

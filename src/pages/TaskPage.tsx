@@ -1,16 +1,21 @@
 import { ChevronLeftIcon } from "lucide-react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { TaskDetails } from "../components/TaskDetails";
+import { EditTask } from "../components/EditTask";
 
 export function TaskPage() {
     const navigate = useNavigate();
+    
+    
+    const [editMode, setEditMode] = useState(false);
 
-    const [searchParams] = useSearchParams();
-    const title = searchParams.get("title");
-    const description = searchParams.get("description");
-
+    function onEditClick() {
+        setEditMode(!editMode);
+    }
 
     return (
-        <div className="h-screen w-screen bg-slate-500 p-6">
+        <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
             <div className="w-[500px] space-y-4">
                     <div className="flex justify-center relative text-slate-100">
                         <button 
@@ -23,11 +28,9 @@ export function TaskPage() {
                             Detalhes da tarefa
                         </h1>
                     </div>
-
-                    <div className="bg-slate-200 p-4 rounded-md">
-                        <h2 className="text-xl text-slate-600 font-bold">{title}</h2>
-                        <p className="text-slate-600">{description}</p>
-                    </div>
+                    {editMode ? <EditTask onEditClick={onEditClick} /> : <TaskDetails onEditClick={onEditClick}/>}
+                    
+                    
             </div>
         </div>
     )

@@ -3,9 +3,9 @@ import axios from "axios";
 
 interface Task {
     id?: number;
-    title: string;
-    description: string;
-    status: string;
+    title?: string;
+    description?: string;
+    status?: string;
 }
 
 const api = axios.create({
@@ -27,10 +27,22 @@ export async function fetchTasks(token: string) {
   }
 }
 
+export async function findTask(tokern: string, id: number) {
+  try {
+    const response = await api.get(`/tasks/${id}`, {
+      headers: {
+        Authorization: `${tokern}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export async function createTask(token: string, task: Task) {
   try {
-    console.log("token no service", token);
-    
     const response = await api.post("/tasks",
       {
         title: task.title,
@@ -50,7 +62,8 @@ export async function createTask(token: string, task: Task) {
   }
 }
 
-export async function updateTask(token: string, id: number, title: string, description: string, status: string) {
+export async function editTask(token: string, task: Task) {
+  const { id, title, description, status } = task;
   try {
     const response = await api.put(`/tasks/${id}`,
       {
@@ -78,8 +91,6 @@ export async function deleteTask(token: string, id: number) {
         Authorization: `${token}`,
       },
     });
-
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error(error);

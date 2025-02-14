@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createTask, deleteTask, fetchTasks } from "../../services/tasksService";
+import { createTask, deleteTask, editTask, fetchTasks, findTask } from "../../services/tasksService";
 
 
 interface Task {
     id?: number;
-    title: string;
-    description: string;
-    status: string;
+    title?: string;
+    description?: string;
+    status?: string;
 }
 
 interface TaskState {
@@ -26,10 +26,20 @@ export const loadTasks = createAsyncThunk('tasks/fetchTasks', async (token: stri
     return response;
 });
 
+export const fetchTask = createAsyncThunk('tasks/fetchTask', async ({ token, id }: { token: string, id: number }) => {
+    const response = await findTask(token, id);
+    return response;
+});
+
 export const addTask = createAsyncThunk('tasks/addTask', async ({ token, task }: { token: string, task: Task }) => {
     const response = await createTask(token, task);
     return response;
 });
+
+export const updateTask = createAsyncThunk('tasks/updateTask', async ({ token, task }: { token: string, task: Task }) => {
+    const response = await editTask(token, task);
+    return response;
+})
 
 export const dropTask = createAsyncThunk('tasks/deleteTask', async ({ token, id }: { token: string, id: number }) => {
     const response = await deleteTask(token, id);
@@ -52,6 +62,9 @@ const taskSlice = createSlice({
             .addCase(loadTasks.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Failed to fetch tasks';
+            })
+            .addCase(fetchTask.fulfilled, (state, action) => {
+                state.tasks.push(action.payload);
             })
             .addCase(addTask.fulfilled, (state, action) => {
                 state.tasks.push(action.payload);
