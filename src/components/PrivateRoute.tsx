@@ -7,8 +7,11 @@ interface ProtectedRouteProps {
 }
 
 export function PrivateRoute({ children }: ProtectedRouteProps) {
-  const { token } = useAuth();
+  const { token, loading } = useAuth();
 
+  if (loading) {
+    return <div>Loading...</div>; // ou um spinner de carregamento
+  }
   if (!token) {
     return <Navigate to="/" replace />;
   }
