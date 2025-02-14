@@ -19,9 +19,11 @@ export function Tasks() {
   return (
     <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
       <div className="w-[500px] space-y-4">
-        <h1 className="text-3xl text-slate-100 font-bold text-center">
-          Gerenciador de Tarefas
-        </h1>
+        <div className="flex flex-row justify-center relative text-slate-100">
+            <h1 className="text-3xl text-slate-100 font-bold text-center">
+                Gerenciador de tarefas
+            </h1>
+        </div>
 
         <AddTask />
 

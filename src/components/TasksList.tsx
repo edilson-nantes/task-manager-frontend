@@ -3,13 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useAuth } from "../context/AuthContext";
 import { dropTask } from "../redux/slices/taskSlice";
-
-interface Task {
-    id?: number;
-    title?: string;
-    description?: string;
-    status?: string;
-}
+import { Task } from "../types/task";
 
 export function TasksList() {
     const navigate = useNavigate();

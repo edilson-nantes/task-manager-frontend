@@ -3,13 +3,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { updateTask } from "../redux/slices/taskSlice";
-
-interface Task {
-    id?: number;
-    title?: string;
-    description?: string;
-    status?: string;
-}
+import { Task } from "../types/task";
 
 interface EditTaskProps {
     onEditClick: () => void;

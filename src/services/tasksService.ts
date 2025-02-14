@@ -1,12 +1,6 @@
 
 import axios from "axios";
-
-interface Task {
-    id?: number;
-    title?: string;
-    description?: string;
-    status?: string;
-}
+import { Task } from "../types/task";
 
 const api = axios.create({
   baseURL: "http://localhost:8080/api",

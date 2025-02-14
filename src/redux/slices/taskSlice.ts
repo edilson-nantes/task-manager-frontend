@@ -1,13 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createTask, deleteTask, editTask, fetchTasks, findTask } from "../../services/tasksService";
-
-
-interface Task {
-    id?: number;
-    title?: string;
-    description?: string;
-    status?: string;
-}
+import { Task } from "../../types/task";
 
 interface TaskState {
     tasks: Task[];
