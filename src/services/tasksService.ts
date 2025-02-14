@@ -21,20 +21,6 @@ export async function fetchTasks(token: string) {
   }
 }
 
-export async function findTask(tokern: string, id: number) {
-  try {
-    const response = await api.get(`/tasks/${id}`, {
-      headers: {
-        Authorization: `${tokern}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
 export async function createTask(token: string, task: Task) {
   try {
     const response = await api.post("/tasks",

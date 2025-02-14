@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addTask } from '../redux/slices/taskSlice';
 import { useAuth } from "../context/AuthContext";
 
@@ -9,6 +9,7 @@ export function AddTask() {
     const [status, setStatus] = useState("");
     const dispatch = useAppDispatch();
     const { token } = useAuth();
+    const { error } = useAppSelector((state) => state.tasks);
 
     function onAddTaskSubmit(title: string, description: string, status: string) {
         if (!title.trim() || !description.trim() || !status.trim()) {
@@ -23,6 +24,10 @@ export function AddTask() {
 
         if (token) {
             dispatch(addTask({ token, task: newTask }));
+
+            if(error){
+                alert(error);
+            }
         }
         setTitle("")
         setDescription("")

@@ -10,7 +10,14 @@ export function LoginForm() {
     const navigate = useNavigate();
 
     async function onLoginClick(email: string, password: string) {
-        const {accessToken, user} = await loginService(email, password);
+        if (!email.trim() || !password.trim()) {
+            return alert("Preencha todos os campos");
+        }
+        const {accessToken, user} = await loginService(email, password)
+            .catch((error) => {
+                console.error(error);
+                return alert("E-mail ou senha inválidos");
+            })
 
         await login(accessToken, user);
         navigate("/tasks");

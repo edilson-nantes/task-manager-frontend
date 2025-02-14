@@ -26,6 +26,7 @@ export function RegisterForm() {
             navigate("/tasks");
         } catch (error) {
             console.error(error);
+            return alert("E-mail já cadastrado");
         }
     }
 
@@ -71,6 +72,11 @@ export function RegisterForm() {
                 }}
                 className="bg-slate-500 text-white p-2 px-4 py-2 rounded-md">
                 Cadastrar
+            </button>
+            <button 
+                onClick={() => {navigate("/")}}
+                className="border-slate-300 border outline-slate-400 bg-slate-300 text-slate-500 p-2 px-4 py-2 rounded-md">
+                Cancelar
             </button>
 
         </div>

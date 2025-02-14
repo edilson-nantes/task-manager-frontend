@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createTask, deleteTask, editTask, fetchTasks, findTask } from "../../services/tasksService";
+import { createTask, deleteTask, editTask, fetchTasks } from "../../services/tasksService";
 import { Task } from "../../types/task";
 
 interface TaskState {
@@ -16,11 +16,6 @@ const initialState: TaskState = {
 
 export const loadTasks = createAsyncThunk('tasks/fetchTasks', async (token: string) => {
     const response = await fetchTasks(token);
-    return response;
-});
-
-export const fetchTask = createAsyncThunk('tasks/fetchTask', async ({ token, id }: { token: string, id: number }) => {
-    const response = await findTask(token, id);
     return response;
 });
 
@@ -56,14 +51,26 @@ const taskSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message || 'Failed to fetch tasks';
             })
-            .addCase(fetchTask.fulfilled, (state, action) => {
-                state.tasks.push(action.payload);
-            })
             .addCase(addTask.fulfilled, (state, action) => {
                 state.tasks.push(action.payload);
             })
+            .addCase(addTask.rejected, (state, action) => {
+                state.error = action.error.message || 'Failed to add task';
+            })
+            .addCase(updateTask.fulfilled, (state, action) => {
+                const taskIndex = state.tasks.findIndex((task) => task.id === action.payload.id);
+                if (taskIndex !== -1) {
+                    state.tasks[taskIndex] = action.payload;
+                }
+            })
+            .addCase(updateTask.rejected, (state, action) => {
+                state.error = action.error.message || 'Failed to update task';
+            })
             .addCase(dropTask.fulfilled, (state, action) => {
                 state.tasks = state.tasks.filter((task) => task.id !== action.payload.id)
+            })
+            .addCase(dropTask.rejected, (state, action) => {
+                state.error = action.error.message || 'Failed to delete task';
             });
     }
 });

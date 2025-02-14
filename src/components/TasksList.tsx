@@ -8,6 +8,7 @@ import { Task } from "../types/task";
 export function TasksList() {
     const navigate = useNavigate();
     const tasks = useAppSelector((state) => state.tasks.tasks);
+    const { error } = useAppSelector((state) => state.tasks);
     const dispatch = useAppDispatch();
     const { token } = useAuth();
 
@@ -20,6 +21,9 @@ export function TasksList() {
     function onDeleteTaskClick(id: number) {
         if (token) {
             dispatch(dropTask({ token, id }));
+            if (error){
+                alert(error);
+            }
         }
     }
 

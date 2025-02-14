@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { AddTask } from "../components/AddTask"
 import { TasksList } from "../components/TasksList"
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { loadTasks } from "../redux/slices/taskSlice";
 import { useAuth } from "../context/AuthContext";
 import { Header } from "../components/Header";
@@ -10,6 +10,7 @@ export function Tasks() {
     const dispatch = useAppDispatch();
     const { token } = useAuth();
     const pageName = "Gerenciador de tarefas";
+    const { loading, error } = useAppSelector((state) => state.tasks);
 
     useEffect(() => {
       if(token) {
@@ -24,12 +25,13 @@ export function Tasks() {
         <Header pageName={pageName}/>
       
         <div className="pt-16 w-[500px] space-y-4">
-          
-          
-
+        {error && <div className="text-red-500">{error}</div>}
           <AddTask />
-
-          <TasksList />
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <TasksList />
+          )}
         </div>
       
     </div>

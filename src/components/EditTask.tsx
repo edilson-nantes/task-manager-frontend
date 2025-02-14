@@ -13,7 +13,7 @@ export function EditTask(props: EditTaskProps) {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
     const task = useAppSelector((state) => state.tasks.tasks.find((task) => task.id?.toString() === id));
-    
+    const { error } = useAppSelector((state) => state.tasks);
     const [title, setTitle] = useState(task?.title);
     const [description, setDescription] = useState(task?.description);
     const [status, setStatus] = useState(task?.status);
@@ -27,9 +27,13 @@ export function EditTask(props: EditTaskProps) {
 
         if (token) {
             dispatch(updateTask({ token, task: updatedTask }));
+            if (error){
+                alert(error);
+            }
         }
 
         navigate("/tasks");
+        window.location.reload();
     }
 
     return (
