@@ -1,14 +1,9 @@
-import { AddTask } from "./components/AddTask";
-import { TasksList } from "./components/TasksList";
+import { Router } from "./Router";
+
 
 export function App() {
   
-
-  return (
-    <>
-      <h1>Gerenciador de Tarefas</h1>
-      <AddTask />
-      <TasksList />
-    </>
-  )
+  return(
+      <Router />
+  );
 }
