@@ -36,11 +36,11 @@ export function AddTask() {
     }
 
     return (
-        <div className="space-y-4 p-6 bg-slate-200 rounded-md shadow flex flex-col">
+        <div className="space-y-4 p-6 bg-white rounded-md shadow flex flex-col">
             <input
                 type="text"
                 placeholder="Digite o nome da tarefa"
-                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md bg-slate-50"
+                className="border border-orange-300 outline-orange-400 px-4 py-2 rounded-md bg-slate-50"
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
             />
@@ -48,13 +48,13 @@ export function AddTask() {
             <input
                 type="text"
                 placeholder="Digite a descrição da tarefa"
-                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md bg-slate-50"
+                className="border border-orange-300 outline-orange-400 px-4 py-2 rounded-md bg-slate-50"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
             />
 
             <select
-                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md bg-slate-50"
+                className="border border-orange-300 outline-orange-400 px-4 py-2 rounded-md bg-slate-50"
                 value={status}
                 onChange={(event) => setStatus(event.target.value)}>
                 <option value="">Status</option>
@@ -67,7 +67,7 @@ export function AddTask() {
                 onClick={() => {
                     onAddTaskSubmit(title, description, status);
                 }}
-                className="bg-slate-500 text-white p-2 px-4 py-2 rounded-md">
+                className="bg-orange-500 text-white p-2 px-4 py-2 rounded-md">
                 Adicionar
             </button>
         </div>

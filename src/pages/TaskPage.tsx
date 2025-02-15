@@ -15,7 +15,7 @@ export function TaskPage() {
     }
 
     return (
-        <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
+        <div className="w-screen h-screen bg-slate-200 flex justify-center p-6">
             <Header pageName={pageName}/>
             <div className="pt-16 w-[500px] space-y-4">
                     

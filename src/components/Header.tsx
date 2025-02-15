@@ -13,7 +13,7 @@ export function Header(HeaderProps: HeaderProps) {
   const userName = user;
 
   return (
-    <div className=" absolute top-0 left-0 flex-row w-full bg-slate-700 p-4 flex items-center justify-center">
+    <div className=" absolute top-0 left-0 flex-row w-full bg-orange-600 p-4 flex items-center justify-center">
 
         <div className="flex flex-row justify-between absolute left-5">
                 <House onClick ={() => navigate("/tasks")} className="text-white" />
@@ -21,7 +21,7 @@ export function Header(HeaderProps: HeaderProps) {
         </div>
         
       
-        <div className="flex items-center space-x-4 text-white">
+        <div className="flex items-center space-x-4 text-slate-500">
 
             <h1 className="text-3xl text-slate-100 font-bold text-center px-7">
                 {pageName}

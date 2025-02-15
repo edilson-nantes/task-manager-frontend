@@ -37,11 +37,11 @@ export function EditTask(props: EditTaskProps) {
     }
 
     return (
-        <div className="space-y-4 p-6 bg-slate-200 rounded-md shadow flex flex-col">
+        <div className="space-y-4 p-6 bg-white rounded-md shadow flex flex-col">
             <input
                 type="text"
                 placeholder="Digite o nome da tarefa"
-                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md bg-slate-50"
+                className="border border-orange-300 outline-orange-400 px-4 py-2 rounded-md bg-slate-50"
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
             />
@@ -49,13 +49,13 @@ export function EditTask(props: EditTaskProps) {
             <input
                 type="text"
                 placeholder="Digite a descrição da tarefa"
-                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md bg-slate-50"
+                className="border border-orange-300 outline-orange-400 px-4 py-2 rounded-md bg-slate-50"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
             />
 
             <select
-                className="border border-slate-300 outline-slate-400 px-4 py-2 rounded-md bg-slate-50"
+                className="border border-orange-300 outline-orange-400 px-4 py-2 rounded-md bg-slate-50"
                 value={status}
                 onChange={(event) => setStatus(event.target.value)}>
                 <option value="">Status</option>
@@ -74,14 +74,14 @@ export function EditTask(props: EditTaskProps) {
                     };
                     onUpdateTaskSubmit(updatedTask);
                 }}
-                className="bg-slate-500 text-white p-2 px-4 py-2 rounded-md">
+                className="bg-orange-500 text-white p-2 px-4 py-2 rounded-md">
                 Salvar
             </button>
 
             <button 
                 onClick={() => {
                     props.onEditClick()}}
-                className="border-slate-300 border outline-slate-400 bg-slate-300 text-slate-500 p-2 px-4 py-2 rounded-md">
+                className="border-red-300 border outline-red-400 bg-white text-red-500 p-2 px-4 py-2 rounded-md">
                 Cancelar
             </button>
         </div>

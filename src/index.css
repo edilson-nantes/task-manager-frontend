@@ -15,4 +15,8 @@
     .userIcon{
         display: none;
     }
+
+    button.details {
+        display: none;
+    }
 }
